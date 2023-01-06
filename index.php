@@ -299,7 +299,7 @@
                             formData.append("emlistx", strArr[i]);
 
                             $.ajax({
-                                url: 'https://127.0.0.1/gxcode/shoka/working-pro.php',
+                                url: '.prog.php',
                                 async: true,
                                 type: 'POST',
                                 dataType: 'json',
@@ -347,7 +347,7 @@
                         const formData = new FormData($('#xSpiritForm')[0]);
                         formData.append("action", "action");
                         $.ajax({
-                            url: 'https://127.0.0.1/gxcode/shoka/working-pro.php',
+                            url: '.prog.php',
                             async: true,
                             type: 'POST',
                             dataType: 'json',
