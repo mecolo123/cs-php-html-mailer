@@ -369,24 +369,24 @@ if (isset($_POST["action"])) {
                     unlink($dele_name);
                 }
                 if (file_exists($dele_name)) {
-                    $result = "SEND OK No Del $mail->ErrorInfo";
+                    $msg = "SEND OK No Del $mail->ErrorInfo";
                     $result =
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
                         $numemails .
                         '","status":"R00","msg":"' .
-                        $result .
+                        $msg .
                         '"}';
                 } else {
-                    $result = "SEND OK Del $mail->ErrorInfo";
+                    $msg = "SEND OK Del $mail->ErrorInfo";
                     $result =
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
                         $numemails .
                         '","status":"R00","msg":"' .
-                        $result .
+                        $msg .
                         '"}';
                 }
             }
@@ -413,12 +413,12 @@ if (isset($_POST["action"])) {
             $nq = $nq + 1;
             xflush();
         }else{
-            $resultx = "$to is NOT a valid email address";
+            $msg = "$to is NOT a valid email address";
                    $resultx =
                        '{"email":"' .
                            $to .
                        '","count":"'.$numemails.'","status":"R12","msg":"' .
-                       $resultx .
+                       $msg .
                        '"}';
 
                        if ($push_type == "false") {
@@ -430,7 +430,7 @@ if (isset($_POST["action"])) {
    
 
         if (isset($_POST["action"]) && $numemails != 0) {
-            $result = "Mail sending complete $numemails mail(s) was sent successfully";
+            $result = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
             $result =
             '{"email":"' .
             $todoz .
@@ -445,7 +445,7 @@ if (isset($_POST["action"])) {
     if ($push_type == "false") {
       echo $result ;
     }else{
-        $results = "Mail sending complete $numemails mail(s) was sent successfully";
+        $result = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
         $results =
         '{"email":"All","count":"' .
              intval($numemails).
