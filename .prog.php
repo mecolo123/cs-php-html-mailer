@@ -46,27 +46,27 @@ if (isset($_POST["action"])) {
     $push_type = lrtrim($_POST["push_type"]);
 
     if ($push_type == "true") {
-        $emaillists = $_FILES["emlist"]["tmp_name"];
-        $emaillist = strtolower(lrtrim(file_get_contents($emaillists)));
-        $allemails = explode("\n", $emaillist);
-        $numemails = count($allemails);
+        $emxaillists = $_FILES["emlist"]["tmp_name"];
+        $emxailxlist = strtolower(lrtrim(file_get_contents($emxaillists)));
+        $allexmaixls = explode("\n", $emxailxlist);
+        $numxemaxils = count($allexmaixls);
     } else {
-        $emaillists = lrtrim($_POST["emlistx"]);
-        $emaillist = strtolower($emaillists);
-        $allemails = explode("\n", $emaillist);
-        $numemails = count($allemails);
+        $emxaillists = lrtrim($_POST["emlistx"]);
+        $emxailxlist = strtolower($emxaillists);
+        $allexmaixls = explode("\n", $emxailxlist);
+        $numxemaxils = count($allexmaixls);
     }
 
-    if ($allemails=="") {
+    if ($allexmaixls=="") {
         echo '{"email":"-","count":"' .
-            $numemails .
+            $numxemaxils .
             '","status":"R01","msg":"FAILED !!  Please Upload Your Leads."}';
         exit;
     }
 
-    if (!$from && !$subject && !$message && !$emaillist) {
+    if (!$from && !$subject && !$message && !$emxailxlist) {
         echo '{"email":"-","count":"' .
-            $numemails .
+            $numxemaxils .
             '","status":"R05","msg":"FAILED !! Please complete all fields before sending your message. "}';
         die();
     }
@@ -91,9 +91,9 @@ if (isset($_POST["action"])) {
     }
 
     if (!empty($_POST["wait"]) && $_POST["wait"] > 0) {
-        set_time_limit(intval($_POST["wait"]) * $numemails * 3600);
+        set_time_limit(intval($_POST["wait"]) * $numxemaxils * 3600);
     } else {
-        set_time_limit($numemails * 3600);
+        set_time_limit($numxemaxils * 3600);
     }
 
     $defaultport = "H*";
@@ -103,23 +103,23 @@ if (isset($_POST["action"])) {
     $result = "Error please check";
     $result =
     '{"email":"-","count":"' .
-    $numemails .
+    $numxemaxils .
     '","status":"R00","msg":"' .
     $result .
     '"}';
 
 
 
-     for ($x = 0; $x < $numemails; $x++) {
-        $to = $allemails[$x];
-      //  print_r($allemails); die;
+     for ($x = 0; $x < $numxemaxils; $x++) {
+        $to = $allexmaixls[$x];
+      //  print_r($allexmaixls); die;
  
       if (isset($to))  {
             $todo = preg_replace('" "', "", $to);
             $todo = preg_replace('"\n"', "", $todo);
             $domain = explode("@", $todo);
-            $message_send = change($allemails[$x], $pesan);
-            $subject_send = change($allemails[$x], $subject);
+            $message_send = change($allexmaixls[$x], $pesan);
+            $subject_send = change($allexmaixls[$x], $subject);
             $qx = $x + 1;
             xflush();
             $mail = new PHPSpiriter();
@@ -169,9 +169,9 @@ if (isset($_POST["action"])) {
                 $fremail = "$email";
             }
 
-            $namax = change($allemails[$x], $nama);
-            $fremails = change($allemails[$x], $fremail);
-            $main_subject = change($allemails[$x], $subject_send);
+            $namax = change($allexmaixls[$x], $nama);
+            $fremails = change($allexmaixls[$x], $fremail);
+            $main_subject = change($allexmaixls[$x], $subject_send);
 
             if (!empty($testeremail)) {
                 $todoz = $testeremail;
@@ -340,7 +340,7 @@ if (isset($_POST["action"])) {
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
-                        $numemails .
+                        $numxemaxils .
                         '","status":"R12","msg":"' .
                         $result .
                         '"}';
@@ -350,7 +350,7 @@ if (isset($_POST["action"])) {
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
-                        $numemails .
+                        $numxemaxils .
                         '","status":"R12","msg":"' .
                         $result .
                         '"}';
@@ -365,7 +365,7 @@ if (isset($_POST["action"])) {
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
-                        $numemails .
+                        $numxemaxils .
                         '","status":"R00","msg":"' .
                         $msg .
                         '"}';
@@ -375,14 +375,14 @@ if (isset($_POST["action"])) {
                         '{"email":"' .
                         $todo_done .
                         '","count":"' .
-                        $numemails .
+                        $numxemaxils .
                         '","status":"R00","msg":"' .
                         $msg .
                         '"}';
                 }
             }
 
-            if (!empty($wait) && $qx < $numemails - 1) {
+            if (!empty($wait) && $qx < $numxemaxils - 1) {
                 sleep($wait);
             }
             if (empty($reconnect)) {
@@ -395,7 +395,7 @@ if (isset($_POST["action"])) {
                 '{"email":"' .
                 $todoz .
                 '","count":"' .
-                $numemails .
+                $numxemaxils .
                 '","status":"R00","msg":"' .
                 $result .
                 '"}';
@@ -408,7 +408,7 @@ if (isset($_POST["action"])) {
                    $resultx =
                        '{"email":"' .
                            $to .
-                       '","count":"'.$numemails.'","status":"R12","msg":"' .
+                       '","count":"'.$numxemaxils.'","status":"R12","msg":"' .
                        $msg .
                        '"}';
 
@@ -424,10 +424,10 @@ if (isset($_POST["action"])) {
     if ($push_type == "false") {
       $push_result =  $result ;
     }else{
-        $results = "Mail sending complete $numemails mail(s) was sent successfully".$msg;
+        $results = "Mail sending complete $numxemaxils mail(s) was sent successfully".$msg;
         $results =
         '{"email":"All","count":"' .
-             intval($numemails).
+             intval($numxemaxils).
             '","status":"R00","msg":"' .
         $results .
         '"}';
